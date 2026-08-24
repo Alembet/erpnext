@@ -140,15 +140,16 @@ function select_time() {
 	if (this.classList.contains("unavailable")) {
 		return;
 	}
-	let selected_element = document.getElementsByClassName("selected");
-	if (!(selected_element.length > 0)) {
-		this.classList.add("selected");
-		show_next_button();
-		return;
-	}
-	selected_element = selected_element[0];
+	// Record the choice on every selection. Previously this was only set when a
+	// prior selection existed, so the first pick (and the default slot below)
+	// left window.selected_time undefined and the appointment was booked with no
+	// time. getElementsByClassName returns a LIVE collection, so remove the
+	// previous selection via a captured reference.
 	window.selected_time = this.id;
-	selected_element.classList.remove("selected");
+	let selected_element = document.getElementsByClassName("selected");
+	if (selected_element.length > 0) {
+		selected_element[0].classList.remove("selected");
+	}
 	this.classList.add("selected");
 	show_next_button();
 }
@@ -160,6 +161,9 @@ function set_default_timeslot() {
 		const timeslot = timeslots[i];
 		if (!timeslot.classList.contains("unavailable")) {
 			timeslot.classList.add("selected");
+			// Keep window.selected_time in sync with the auto-selected default so
+			// submitting without changing the slot still sends a time.
+			window.selected_time = timeslot.id;
 			break;
 		}
 	}

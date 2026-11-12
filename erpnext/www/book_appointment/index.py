@@ -119,7 +119,6 @@ def create_appointment(date: str, time: str, tz: str, contact: str | dict):
 	contact = frappe.parse_json(contact)
 	appointment.customer_name = contact.get("name", None)
 	appointment.customer_phone_number = contact.get("number", None)
-	appointment.customer_skype = contact.get("skype", None)
 	appointment.customer_details = contact.get("notes", None)
 	appointment.customer_email = contact.get("email", None)
 	appointment.created_through_portal = 1

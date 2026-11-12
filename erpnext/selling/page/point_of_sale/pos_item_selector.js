@@ -169,7 +169,7 @@ erpnext.PointOfSale.ItemSelector = class {
 							<img
 								onerror="cur_pos.item_selector.handle_broken_image(this)"
 								class="item-img" src="${item_image}"
-								alt="${item_name}"
+								alt="${frappe.utils.escape_html(item_name)}"
 							>
 						</div>`;
 			} else {
@@ -185,7 +185,8 @@ erpnext.PointOfSale.ItemSelector = class {
 				data-batch-no="${batch_no}" data-uom="${uom}"
 				data-rate="${price_list_rate || 0}"
 				data-stock-uom="${stock_uom}"
-				title="${item_name}">
+				role="button" tabindex="0" aria-label="${frappe.utils.escape_html(item_name)}"
+				title="${frappe.utils.escape_html(item_name)}">
 
 				${get_item_image_html()}
 
@@ -349,6 +350,13 @@ erpnext.PointOfSale.ItemSelector = class {
 					this.barcode_scanned = true;
 				}
 			},
+		});
+
+		this.$component.on("keydown", ".item-wrapper", function (e) {
+			if (e.key === "Enter" || e.key === " ") {
+				e.preventDefault();
+				$(this).click();
+			}
 		});
 
 		this.$component.on("click", ".item-wrapper", function () {

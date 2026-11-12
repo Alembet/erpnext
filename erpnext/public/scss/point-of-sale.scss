@@ -1435,4 +1435,59 @@
 			grid-column: span 6 / span 1;
 		}
 	}
+
+	// Keyboard focus ring for the div-based controls that carry role="button".
+	.numpad-btn,
+	.item-wrapper,
+	.cart-item-wrapper,
+	.checkout-btn,
+	.edit-cart-btn,
+	.add-discount-wrapper,
+	.reset-customer-btn,
+	.close-details-btn,
+	.close-btn,
+	.summary-btn {
+		&:focus-visible {
+			outline: 2px solid var(--primary);
+			outline-offset: 2px;
+		}
+	}
+
+	// Touch-target floor (WCAG 2.5.5). The POS runs on both desk terminals and
+	// touchscreens, so enforce 44px everywhere and grow the hit areas on coarse
+	// (touch/stylus) pointers where fingers, not a cursor, do the tapping.
+	.numpad-btn,
+	.primary-action,
+	.checkout-btn,
+	.edit-cart-btn,
+	.submit-order-btn,
+	.summary-btn {
+		min-height: 44px;
+	}
+
+	.reset-customer-btn,
+	.close-details-btn,
+	.close-btn {
+		min-width: 44px;
+		min-height: 44px;
+		justify-content: center;
+	}
+
+	@media (pointer: coarse) {
+		.numpad-btn,
+		.primary-action,
+		.checkout-btn,
+		.edit-cart-btn,
+		.submit-order-btn,
+		.summary-btn {
+			min-height: 56px;
+		}
+
+		.reset-customer-btn,
+		.close-details-btn,
+		.close-btn {
+			min-width: 48px;
+			min-height: 48px;
+		}
+	}
 }

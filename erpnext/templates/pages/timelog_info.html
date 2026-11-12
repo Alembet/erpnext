@@ -19,29 +19,29 @@
 	<div class="page-content-block">
 		<div class="row">
 			<div class="col-sm-12" style="max-width: 500px;">
-				<label for="project" class="control-label text-muted small">{{ __("Project") }}</label>
-				<input type="text" class="form-control" name="project" readonly value= "{{ doc.project }}">
+				<label for="project" class="control-label text-muted small">{{ _("Project") }}</label>
+				<input type="text" class="form-control" id="project" name="project" readonly value="{{ doc.project }}">
 
-				<label for="activity_type" class="control-label text-muted small">{{ __("Activity Type") }}</label>
-				<input type="text" class="form-control" name="activity_type" readonly value= "{{ doc.activity_type }}">
+				<label for="activity_type" class="control-label text-muted small">{{ _("Activity Type") }}</label>
+				<input type="text" class="form-control" id="activity_type" name="activity_type" readonly value="{{ doc.activity_type }}">
 
-				<label for="task" class="control-label text-muted small">{{ __("Task") }}</label>
-				<input type="text" class="form-control" name="task" readonly value= "{{ doc.task }}">
+				<label for="task" class="control-label text-muted small">{{ _("Task") }}</label>
+				<input type="text" class="form-control" id="task" name="task" readonly value="{{ doc.task }}">
 
-				<label for="from_time" class="control-label text-muted small">{{ __("From Time") }}</label>
-				<input type="text" class="form-control" name="from_time" readonly value= "{{ doc.from_time }}">
+				<label for="from_time" class="control-label text-muted small">{{ _("From Time") }}</label>
+				<input type="text" class="form-control" id="from_time" name="from_time" readonly value="{{ doc.from_time }}">
 
-				<label for="to_time" class="control-label text-muted small">{{ __("To Time") }}</label>
-				<input type="text" class="form-control" name="to_time" readonly value= "{{ doc.to_time }}">
+				<label for="to_time" class="control-label text-muted small">{{ _("To Time") }}</label>
+				<input type="text" class="form-control" id="to_time" name="to_time" readonly value="{{ doc.to_time }}">
 
-				<label for="to_time" class="control-label text-muted small">{{ __("Hours") }}</label>
-				<input type="text" class="form-control" name="Hours" readonly value= "{{ doc.hours }}">
+				<label for="hours" class="control-label text-muted small">{{ _("Hours") }}</label>
+				<input type="text" class="form-control" id="hours" name="hours" readonly value="{{ doc.hours }}">
 
-				<label for="status" class="control-label text-muted small">{{ __("Status") }}</label>
-				<input type="text" class="form-control" name="status" readonly value= "{{ _(doc.status) }}">
+				<label for="status" class="control-label text-muted small">{{ _("Status") }}</label>
+				<input type="text" class="form-control" id="status" name="status" readonly value="{{ _(doc.status) }}">
 
-				<label for="Note" class="control-label text-muted small">{{ __("Note") }}</label>
-				<textarea class="form-control" name="Hours" readonly> {{ doc.note }} </textarea>
+				<label for="note" class="control-label text-muted small">{{ _("Note") }}</label>
+				<textarea class="form-control" id="note" name="note" readonly> {{ doc.note }} </textarea>
 			</div>
 		</div>
 	</div>

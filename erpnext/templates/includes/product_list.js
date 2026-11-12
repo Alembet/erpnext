@@ -2,7 +2,9 @@
 // License: GNU General Public License v3. See license.txt
 
 window.get_product_list = function() {
-	$(".more-btn .btn").click(function() {
+	// Namespaced off+on so repeated calls never stack duplicate handlers
+	// (previously every fetch re-bound, firing N AJAX calls per click).
+	$(".more-btn .btn").off("click.more").on("click.more", function() {
 		window.get_product_list()
 	});
 
@@ -37,14 +39,14 @@ window.render_product_list = function(data) {
 		});
 	}
 	if(data.length < 10) {
-		if(!table) {
+		if(!table.length) {
 			let message = __("No products found.");
 			$(".more-btn")
-				.replaceWith(`<div class='alert alert-warning'>{{ ${message} }}</div>`);
+				.replaceWith(`<div class='alert alert-warning'>${frappe.utils.escape_html(message)}</div>`);
 		} else {
 			let message = __("Nothing more to show.");
 			$(".more-btn")
-				.replaceWith(`<div class='text-muted'>{{ ${message} }}</div>`);
+				.replaceWith(`<div class='text-muted'>${frappe.utils.escape_html(message)}</div>`);
 		}
 	} else {
 		$(".more-btn").toggle(true)

@@ -29,9 +29,9 @@ erpnext.PointOfSale.ItemDetails = class {
 		this.$component.html(
 			`<div class="item-details-header">
 				<div class="label">${__("Item Details")}</div>
-				<div class="close-btn">
-					<svg width="32" height="32" viewBox="0 0 14 14" fill="none">
-						<path d="M4.93764 4.93759L7.00003 6.99998M9.06243 9.06238L7.00003 6.99998M7.00003 6.99998L4.93764 9.06238L9.06243 4.93759" stroke="#8D99A6"/>
+				<div class="close-btn" role="button" tabindex="0" aria-label="${__("Close")}">
+					<svg width="32" height="32" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
+						<path d="M4.93764 4.93759L7.00003 6.99998M9.06243 9.06238L7.00003 6.99998M7.00003 6.99998L4.93764 9.06238L9.06243 4.93759" stroke="currentColor"/>
 					</svg>
 				</div>
 			</div>
@@ -411,6 +411,13 @@ erpnext.PointOfSale.ItemDetails = class {
 
 		this.$component.on("click", ".close-btn", () => {
 			this.events.close_item_details();
+		});
+
+		this.$component.on("keydown", ".close-btn", (e) => {
+			if (e.key === "Enter" || e.key === " ") {
+				e.preventDefault();
+				this.events.close_item_details();
+			}
 		});
 	}
 

@@ -195,6 +195,13 @@ erpnext.PointOfSale.PastOrderSummary = class {
 	}
 
 	bind_events() {
+		this.$summary_container.on("keydown", ".summary-btn", function (e) {
+			if (e.key === "Enter" || e.key === " ") {
+				e.preventDefault();
+				$(this).click();
+			}
+		});
+
 		this.$summary_container.on("click", ".return-btn", async () => {
 			const r = await this.is_invoice_returnable(this.doc.doctype, this.doc.name);
 			if (!r) {
@@ -343,7 +350,7 @@ erpnext.PointOfSale.PastOrderSummary = class {
 					const class_name = b.split(" ")[0].toLowerCase();
 					const btn = __(b);
 					this.$summary_btns.append(
-						`<div class="summary-btn btn btn-default ${class_name}-btn">${btn}</div>`
+						`<div class="summary-btn btn btn-default ${class_name}-btn" role="button" tabindex="0">${btn}</div>`
 					);
 				});
 			}

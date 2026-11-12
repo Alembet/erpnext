@@ -6,11 +6,9 @@
 		<div class="col-sm-5 col-12" style="margin-bottom: 10px;margin-top: 5px;">
 			{{ item_name_and_description(d, doc) }}
 		</div>
-		<!-- <div class="col-sm-2 col-2" style="margin-bottom: 10px;">
-			<textarea type="text" style="margin-top: 5px;" class="input-with-feedback form-control rfq-offer_detail" ></textarea>
-		</div> -->
 		<div class="col-sm-2 col-4 text-right">
 				<input type="text" class="form-control text-right rfq-qty" style="margin-top: 5px;display: inline-block"
+				aria-label="{{ _('Quantity') }}"
 				value = "{{ d.get_formatted('qty') }}"
 				data-idx="{{ d.idx }}">
 				<p class="text-muted small" style="margin-top: 10px;">
@@ -19,6 +17,7 @@
 		</div>
 		<div class="col-sm-2 col-4 text-right">
 			<input type="text" class="form-control text-right rfq-rate"
+				aria-label="{{ _('Rate') }}"
 				style="margin-top: 5px;display: inline-block" value="0.00"
 				data-idx="{{ d.idx }}">
 		</div>

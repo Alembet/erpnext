@@ -1,6 +1,7 @@
-{% macro product_image_square(website_image, css_class="") %}
+{% macro product_image_square(website_image, css_class="", alt="") %}
 <div class="product-image product-image-square h-100 rounded
 	{% if not website_image -%} missing-image {%- endif %} {{ css_class }}"
+	{% if alt -%} role="img" aria-label="{{ alt | e }}" {%- else -%} role="presentation" {%- endif %}
 	{% if website_image -%}
 	style="background-image: url('{{ (frappe.utils.quoted(website_image) | abs_url).replace("'", "%27") }}');"
 	{%- endif %}>
@@ -10,7 +11,7 @@
 {% macro product_image(website_image, css_class="product-image", alt="", no_border=False) %}
 	<div class="{{ 'border' if not no_border else ''}} text-center rounded {{ css_class }}" style="overflow: hidden;">
 		{% if website_image %}
-			<img itemprop="image" class="website-image h-100 w-100" alt="{{ alt | e }}" src="{{ frappe.utils.quoted(website_image) | abs_url }}">
+			<img itemprop="image" class="website-image h-100 w-100" loading="lazy" alt="{{ alt | e }}" src="{{ frappe.utils.quoted(website_image) | abs_url }}">
 		{% else %}
 			<div class="card-img-top no-image-item">
 				{{ frappe.utils.get_abbr(alt) or "NA" }}
@@ -27,6 +28,7 @@
 		{% if website_image -%}
 			<a href="{{ frappe.utils.quoted(website_image) | abs_url | e }}">
 				<img itemprop="image" src="{{ frappe.utils.quoted(website_image) | abs_url | e }}"
+					loading="lazy" alt="{{ name | e }}"
 					class="img-responsive img-thumbnail sidebar-image" style="min-height:100%; min-width:100%;">
 			</a>
 		{%- endif %}
@@ -51,7 +53,7 @@
 		{% if image %}
 		<div class="row no-gutters">
 			<div class="col-md-5 ml-4">
-				<img class="card-img" src="{{ image }}" alt="{{ title }}">
+				<img class="card-img" loading="lazy" src="{{ image }}" alt="{{ title }}">
 			</div>
 			<div class="col-md-6">
 				{{ item_card_body(title, description, item, is_featured, align) }}
@@ -70,7 +72,7 @@
 		{% if image %}
 			<div class="card-img-container">
 				<a href="/{{ item.route or '#' }}" style="text-decoration: none;">
-					<img class="card-img" src="{{ image }}" alt="{{ title }}">
+					<img class="card-img" loading="lazy" src="{{ image }}" alt="{{ title }}">
 				</a>
 			</div>
 		{% else %}
@@ -119,18 +121,19 @@
 		<div class="card-img-container">
 			<a href="/{{ item.route or '#' }}" style="text-decoration: none;">
 				{% if item.image %}
-					<img class="card-img" src="{{ item.image }}" alt="{{ title }}">
+					<img class="card-img" loading="lazy" src="{{ item.image }}" alt="{{ title }}">
 				{% else %}
 					<div class="card-img-top no-image">
 						{{ frappe.utils.get_abbr(title) }}
 					</div>
 				{% endif %}
 			</a>
-			<div class="remove-wish" data-item-code="{{ item.item_code }}">
-				<svg class="icon icon-md remove-wish-icon">
+			<button type="button" class="remove-wish" aria-label="{{ _('Remove from wishlist') }}"
+				style="background: none; border: 0; padding: 0;" data-item-code="{{ item.item_code }}">
+				<svg class="icon icon-md remove-wish-icon" aria-hidden="true" focusable="false">
 					<use class="close" href="#icon-delete"></use>
 				</svg>
-			</div>
+			</button>
 		</div>
 
 		{{ wishlist_card_body(item, title, settings) }}
@@ -268,7 +271,7 @@
 
 		{% if values | len > 20 %}
 		<!-- show inline filter if values more than 20 -->
-		<input type="text" class="form-control form-control-sm mb-2 filter-lookup-input" placeholder="Search {{ item_field.label + 's' }}"/>
+		<input type="text" class="form-control form-control-sm mb-2 filter-lookup-input" aria-label="Search {{ item_field.label + 's' }}" placeholder="Search {{ item_field.label + 's' }}"/>
 		{% endif %}
 
 		{% if values %}
@@ -300,7 +303,7 @@
 		<div class="filter-label mb-3">{{ attribute.name }}</div>
 		{% if attribute.item_attribute_values | len > 20 %}
 		<!-- show inline filter if values more than 20 -->
-		<input type="text" class="form-control form-control-sm mb-2 filter-lookup-input" placeholder="Search {{ attribute.name + 's' }}"/>
+		<input type="text" class="form-control form-control-sm mb-2 filter-lookup-input" aria-label="Search {{ attribute.name + 's' }}" placeholder="Search {{ attribute.name + 's' }}"/>
 		{% endif %}
 
 		{% if attribute.item_attribute_values %}
@@ -331,7 +334,7 @@
 <div class="recommended-item mb-6 d-flex">
 	<div class="r-item-image">
 		{% if item.website_item_thumbnail %}
-			{{ product_image(item.website_item_thumbnail, css_class="r-product-image", alt="item.website_item_name", no_border=True) }}
+			{{ product_image(item.website_item_thumbnail, css_class="r-product-image", alt=item.website_item_name, no_border=True) }}
 		{% else %}
 			<div class="no-image-r-item">
 				{{ frappe.utils.get_abbr(item.website_item_name) or "NA" }}

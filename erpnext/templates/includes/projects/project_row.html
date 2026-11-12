@@ -2,8 +2,7 @@
   <div class="web-list-item transaction-list-item">
     <div class="row">
       <div class="col-xs-2 project-link">
-        <a class="transaction-item-link" href="/projects?project={{ doc.name | urlencode }}">Link</a>
-        {{ doc.name }}
+        <a class="transaction-item-link" href="/projects?project={{ doc.name | urlencode }}">{{ doc.name | e }}</a>
       </div>
       <div class="col-xs-2 project-name">
         {{ doc.project_name | e }}
@@ -34,11 +33,11 @@
               ], as_dict = True) %}
             {% if user_details.user_image %}
               <span class="avatar avatar-small" style="width:32px; height:32px;" title="{{ user_details.full_name | e }}">
-                <img src="{{ user_details.user_image | e }}">
+                <img src="{{ user_details.user_image | e }}" loading="lazy" alt="{{ user_details.full_name | e }}">
               </span>
             {% else %}
               <span class="avatar avatar-small" style="width:32px; height:32px;" title="{{ user_details.full_name | e }}">
-                <div class='standard-image' style="background-color: #F5F4F4; color: #000;">
+                <div class='standard-image' style="background-color: var(--gray-200); color: var(--text-color);">
                   {{ frappe.utils.get_abbr(user_details.full_name) }}
                 </div>
               </span>

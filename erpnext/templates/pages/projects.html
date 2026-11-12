@@ -82,7 +82,7 @@
     <div class="project-attachments">
       {% for attachment in doc.attachments %}
         <div class="attachment">
-          <a class="no-decoration attachment-link" href="{{ attachment.file_url|e }}" target="blank">
+          <a class="no-decoration attachment-link" href="{{ attachment.file_url|e }}" target="_blank" rel="noopener noreferrer">
             <div class="row">
               <div class="col-xs-9">
                 <span class="indicator red file-name">
@@ -112,8 +112,8 @@
   <span class="small py-2">{{ _("Project Progress:") }}</span>
   <div class="progress progress-hg" style="height: 15px;">
     <div
-      class="progress-bar progress-bar-{{ 'warning' if percent_complete|round < 100 else 'success' }} active"\
-      role="progressbar" aria-valuenow="{{ percent_complete|round|int }}" aria-valuemin="0"\
+      class="progress-bar progress-bar-{{ 'warning' if percent_complete|round < 100 else 'success' }} active"
+      role="progressbar" aria-valuenow="{{ percent_complete|round|int }}" aria-valuemin="0"
       aria-valuemax="100" style="width:{{ percent_complete|round|int }}%;">
     </div>
   </div>

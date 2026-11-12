@@ -33,7 +33,7 @@ erpnext.PointOfSale.NumberPad = class {
 
 						return (
 							a2 +
-							`<div class="numpad-btn ${class_to_append}" data-button-value="${fieldname}">${__(
+							`<div class="numpad-btn ${class_to_append}" data-button-value="${fieldname}" role="button" tabindex="0">${__(
 								number
 							)}</div>`
 						);
@@ -54,6 +54,12 @@ erpnext.PointOfSale.NumberPad = class {
 		this.wrapper.on("click", ".numpad-btn", function () {
 			const $btn = $(this);
 			me.events.numpad_event($btn);
+		});
+		this.wrapper.on("keydown", ".numpad-btn", function (e) {
+			if (e.key === "Enter" || e.key === " ") {
+				e.preventDefault();
+				me.events.numpad_event($(this));
+			}
 		});
 	}
 };

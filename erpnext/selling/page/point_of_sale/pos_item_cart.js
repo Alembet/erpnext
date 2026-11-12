@@ -89,7 +89,7 @@ erpnext.PointOfSale.ItemCart = class {
 		this.$totals_section = this.$component.find(".cart-totals-section");
 
 		this.$totals_section.append(
-			`<div class="add-discount-wrapper">
+			`<div class="add-discount-wrapper" role="button" tabindex="0" aria-label="${__("Add Discount")}">
 				${this.get_discount_icon()} ${__("Add Discount")}
 			</div>
 			<div class="item-qty-total-container">
@@ -105,8 +105,8 @@ erpnext.PointOfSale.ItemCart = class {
 				<div>${__("Grand Total")}</div>
 				<div>0.00</div>
 			</div>
-			<div class="checkout-btn">${__("Checkout")}</div>
-			<div class="edit-cart-btn">${__("Edit Cart")}</div>`
+			<div class="checkout-btn" role="button" tabindex="0">${__("Checkout")}</div>
+			<div class="edit-cart-btn" role="button" tabindex="0">${__("Edit Cart")}</div>`
 		);
 
 		this.$add_discount_elem = this.$component.find(".add-discount-wrapper");
@@ -145,12 +145,28 @@ erpnext.PointOfSale.ItemCart = class {
 		);
 
 		this.$numpad_section.append(
-			`<div class="numpad-btn checkout-btn" data-button-value="checkout">${__("Checkout")}</div>`
+			`<div class="numpad-btn checkout-btn" role="button" tabindex="0" data-button-value="checkout">${__(
+				"Checkout"
+			)}</div>`
 		);
 	}
 
 	bind_events() {
 		const me = this;
+
+		// Translate Enter/Space into a click for the div-based button controls so
+		// they are operable by keyboard (they carry role="button" / tabindex="0").
+		this.$component.on(
+			"keydown",
+			".reset-customer-btn, .close-details-btn, .cart-item-wrapper, .checkout-btn, .edit-cart-btn, .add-discount-wrapper",
+			function (e) {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					$(this).click();
+				}
+			}
+		);
+
 		this.$customer_section.on("click", ".reset-customer-btn", function () {
 			me.reset_customer_selector();
 		});
@@ -467,9 +483,11 @@ erpnext.PointOfSale.ItemCart = class {
 							<div class="customer-name">${frappe.utils.escape_html(customer_name)}</div>
 							${get_customer_description()}
 						</div>
-						<div class="reset-customer-btn" data-customer="${frappe.utils.escape_html(customer)}">
-							<svg width="32" height="32" viewBox="0 0 14 14" fill="none">
-								<path d="M4.93764 4.93759L7.00003 6.99998M9.06243 9.06238L7.00003 6.99998M7.00003 6.99998L4.93764 9.06238L9.06243 4.93759" stroke="#8D99A6"/>
+						<div class="reset-customer-btn" role="button" tabindex="0" aria-label="${__(
+							"Remove customer"
+						)}" data-customer="${frappe.utils.escape_html(customer)}">
+							<svg width="32" height="32" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
+								<path d="M4.93764 4.93759L7.00003 6.99998M9.06243 9.06238L7.00003 6.99998M7.00003 6.99998L4.93764 9.06238L9.06243 4.93759" stroke="currentColor"/>
 							</svg>
 						</div>
 					</div>
@@ -609,9 +627,9 @@ erpnext.PointOfSale.ItemCart = class {
 
 		if (!$item_to_update.length) {
 			this.$cart_items_wrapper.append(
-				`<div class="cart-item-wrapper" data-row-name="${frappe.utils.escape_html(
-					item_data.name
-				)}"></div>
+				`<div class="cart-item-wrapper" role="button" tabindex="0" aria-label="${frappe.utils.escape_html(
+					item_data.item_name || item_data.name
+				)}" data-row-name="${frappe.utils.escape_html(item_data.name)}"></div>
 				<div class="seperator"></div>`
 			);
 			$item_to_update = this.get_cart_item(item_data);
@@ -901,9 +919,9 @@ erpnext.PointOfSale.ItemCart = class {
 			this.$customer_section.find(".customer-details").html(
 				`<div class="header">
 					<div class="label">${__("Contact Details")}</div>
-					<div class="close-details-btn">
-						<svg width="32" height="32" viewBox="0 0 14 14" fill="none">
-							<path d="M4.93764 4.93759L7.00003 6.99998M9.06243 9.06238L7.00003 6.99998M7.00003 6.99998L4.93764 9.06238L9.06243 4.93759" stroke="#8D99A6"/>
+					<div class="close-details-btn" role="button" tabindex="0" aria-label="${__("Close")}">
+						<svg width="32" height="32" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
+							<path d="M4.93764 4.93759L7.00003 6.99998M9.06243 9.06238L7.00003 6.99998M7.00003 6.99998L4.93764 9.06238L9.06243 4.93759" stroke="currentColor"/>
 						</svg>
 					</div>
 				</div>

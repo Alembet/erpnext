@@ -130,7 +130,7 @@ class TestAppointment(ERPNextTestSuite):
 				date=str(datetime.date.today() + datetime.timedelta(days=days_from_now)),
 				time=time,
 				tz="UTC",
-				contact={"name": "Portal Visitor", "email": email, "number": "123", "skype": "", "notes": ""},
+				contact={"name": "Portal Visitor", "email": email, "number": "123", "notes": ""},
 			)
 		self._verification_email_mock = mock_send
 		return appointment
@@ -278,7 +278,6 @@ class TestAppointment(ERPNextTestSuite):
 					"name": "Blocked",
 					"email": "blocked@example.com",
 					"number": "1",
-					"skype": "",
 					"notes": "",
 				},
 			)
